@@ -1,6 +1,8 @@
 # Specify the provider and access details
 provider "aws" {
   region = "${var.aws_region}"
+  access_key = "${var.aws_access_key}"
+  secret_key = "${var.aws_secret_key}"
 }
 
 # Create a VPC to launch our instances into
@@ -100,7 +102,7 @@ resource "aws_elb" "web" {
 }
 
 resource "aws_key_pair" "auth" {
-  key_name   = "tf-aws-two-tier-example"
+  key_name   = "init"
   public_key = "${file(var.public_key_path)}"
 }
 
@@ -109,7 +111,7 @@ resource "aws_instance" "web" {
   # communicate with the resource (instance)
   connection {
     # The default username for our AMI
-    user = "ubuntu"
+    user = "centos"
 
     # The connection will use the local SSH agent for authentication.
   }
@@ -136,8 +138,9 @@ resource "aws_instance" "web" {
   # this should be on port 80
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get -y update",
-      "sudo apt-get -y install nginx",
+      "sudo yum -y update",
+      "sudo yum -y install epel-release",
+      "sudo yum -y install nginx",
       "sudo service nginx start"
     ]
   }
