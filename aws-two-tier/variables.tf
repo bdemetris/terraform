@@ -13,12 +13,12 @@ variable "aws_region" {
   default = "us-west-2"
 }
 
-# Centos 7 with HVM Support
+# Ubuntu 14 LTS with HVM
 variable "aws_amis" {
   default = {
     eu-west-1 = "ami-33734044"
     us-east-1 = "ami-61bbf104"
     us-west-1 = "ami-f77fbeb3"
-    us-west-2 = "ami-d440a6e7"
+    us-west-2 = "ami-5189a661"
   }
 }
